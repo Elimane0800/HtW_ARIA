@@ -22,3 +22,11 @@ J'ai évalué ces approches sur un benchmark métier que j'ai conçu, composé d
 Pour construire mes vecteurs de pilotage, j'ai standardisé les tenseurs d'activations récoltés et appliqué une Analyse en Composantes Principales (PCA) avec Scikit-learn afin d'isoler des directions sémantiques spécifiques. En calculant la différence entre le centroïde des activations de prompts complexes (Guided Chain-of-Thought) et celui des prompts basiques (Zero-Shot) dans cet espace réduit, j'ai défini un vecteur directionnel. J'ai ensuite utilisé la méthode inverse_transform pour le reprojeter dans l'espace de haute dimension du Transformer, créant ainsi mon tenseur de pilotage une fois amplifié et normalisé. L'intervention s'effectue dynamiquement via la méthode native register_forward_hook de PyTorch, qui intercepte la passe avant au niveau des couches cibles selon des schémas d'injection précis (linéaire ou exponentiel). Le hook récupère le tenseur des états cachés en cours, auquel j'additionne le tenseur de pilotage. J'ai programmé cette injection via un multiplicateur positionnel indexé sur la longueur de la séquence : l'intensité démarre à 30 % sur les premiers tokens pour préserver l'intégration du contexte initial, puis augmente linéairement jusqu'à 100 % sur les derniers tokens. Le tenseur modifié est transmis à la couche suivante, ce qui altère le calcul de l'attention et modifie la distribution finale des probabilités de sortie.
 
 Il convient de préciser que cette implémentation du steering revêtait un but principalement exploratoire, s'inscrivant dans un contexte de recherche où cette méthode était historiquement testée sur des réseaux de neurones plus simples ou des concepts isolés, et non encore généralisée à des architectures génératives complexes comme les VSLM.
+
+
+# 4- Lancer un entraînement AC Video JEPA
+
+Vous souhaitez entraîner l’exemple AC Video JEPA sur l’environnement Two Rooms. Quelle proposition est correcte ?
+La proposition B. " L’entraînement se lance avec python -m examples.ac_video_jepa.main --fname examples/
+ac_video_jepa/cfgs/train.yaml, et les trajectoires Two Rooms sont générées à la volée pendant
+l’entraînement"
