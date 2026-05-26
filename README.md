@@ -4,8 +4,8 @@ Participer à ce Hackathon sera l'occasion pour nous de nourrir notre curiosité
 
 L'équipe ARIA est composée de : 
 
-- Elimane Yassine SEIDOU (Scientifique) : Titulaire d'un Master Recherche en Intelligence Artificielle et d'une Certification RNCP7 en Intelligence Artificielle & Management. Actuellement en Doctorat CIFRE entre Devoteam Research et l'Ecole Doctorale de l'Institut Polytechnique de Paris (Telecom SudParis - SAMOVAR) en IA appliquée au Continuum Computing. Quelques publications à son actif notamment en workshop à des A* tels que AAAI 2026 et WWW 2026 et en Regular Full Paper à des rangs B tels que IEEE SSE 2026 et IEEE CLOUD 2026
-- Charly Ken CAPO-CHICHI (Ingénieur) : Ingénieur en Big Data. Actuellement en double cursus de Masters 2 en Intelligence Artificielle à l'ENSAM et au CNAM (il a aimé les Arts et Métiers du coup il fait les deux ^^). Publication à en workshop à AAAI 2026 à son actif.
+- Elimane Yassine SEIDOU (Scientifique) : Titulaire d'un Master Recherche en Intelligence Artificielle et d'une Certification RNCP7 en Intelligence Artificielle & Management. Actuellement en Doctorat CIFRE entre Devoteam Research et l'Ecole Doctorale de l'Institut Polytechnique de Paris (Telecom SudParis - SAMOVAR) en IA appliquée au Continuum Computing. Quelques publications à son actif notamment en workshop à des A* telles que AAAI 2026 et WWW 2026 et en Regular Full Paper à des rangs B tels que IEEE SSE 2026 et IEEE CLOUD 2026
+- Charly Ken CAPO-CHICHI (Ingénieur) : Ingénieur en Big Data. Actuellement en double cursus de Masters 2 en Intelligence Artificielle à l'ENSAM et au CNAM (il a aimé les Arts et Métiers du coup il fait les deux ^^). Publication en workshop à AAAI 2026 à son actif.
 - Jarfino HOUNGBADJI (Ingénieur) : Ingénieur en Big Data. Actuellement étudiant en MSc d'Intelligence Artificielle à l'ECE
 - Randy TCHUISSEU (Ingénieur) : Ingénieur en Big Data. Actuellement étudiant en Mastère d'Intelligence Artificielle et Big Data à l'ESGI.
 
