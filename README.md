@@ -48,7 +48,7 @@ Les évaluations démontrent que l'architecture hybride permet à l'agent de syn
 
 # 2- Prévention de l’effondrement des représentations dans EB-JEPA
 
-Dans les architectures JEPA, l'effondrement des représentations se produit lorsque l'encodeur contourne la difficulté de l'apprentissage en produisant une constante triviale pour toutes les entrées. Pour empêcher cela, la bibliothèque EB-JEPA (*A Lightweight Library for Energy-Based Joint-Embedding Predictive Architectures*, Terver et al., 2026) adapte ses stratégies de régularisation en fonction de la complexité de la tâche : elle applique une contrainte d'invariance par projection spatiale (VICReg ou SIGReg) pour l'imagerie statique, un calcul d'erreur récursif (*multi-step rollout*) pour la vidéo, et une double contrainte de lissage géométrique ($\mathcal{L}_{sim}$) et de dynamique inverse ($\mathcal{L}_{IDM}$) pour l'interaction conditionnée par l'action.
+Dans les architectures JEPA, l'effondrement des représentations se produit lorsque l'encodeur contourne la difficulté de l'apprentissage en produisant une constante triviale pour toutes les entrées. Pour empêcher cela, la bibliothèque EB-JEPA (*A Lightweight Library for Energy-Based Joint-Embedding Predictive Architectures*, Terver et al., 2026) adapte ses stratégies de régularisation en fonction de la complexité de la tâche : elle applique une contrainte d'invariance par projection spatiale (VICReg ou SIGReg) pour l'imagerie statique, un calcul d'erreur récursif (*multi-step rollout*) pour la vidéo, et une double contrainte de lissage géométrique ( $\mathcal{L}_{sim}$ ) et de dynamique inverse ( $\mathcal{L}_{IDM}$ ) pour l'interaction conditionnée par l'action.
 
 ### Image-JEPA
 
