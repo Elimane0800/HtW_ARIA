@@ -9,7 +9,7 @@ L'équipe ARIA est composée de :
 - Jarfino HOUNGBADJI (Ingénieur) : Ingénieur en Big Data. Actuellement étudiant en MSc d'Intelligence Artificielle à l'ECE
 - Randy TCHUISSEU (Ingénieur) : Ingénieur Big Data. Actuellement étudiant en Mastère d'Intelligence Artificielle et Big Data à l'ESGI.
 
-# Quel est le plus grand projet que vous avez réalisé avec PyTorch ?
+# 1- Quel est le plus grand projet que vous avez réalisé avec PyTorch ?
 
 ## Projet réalisé par Elimane Yassine SEIDOU - Optimisation de VSLM par Activation Steering — Master 2 CNAM, Alternance chez Devoteam Research
 
