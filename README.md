@@ -5,9 +5,9 @@ Participer à ce Hackathon sera l'occasion pour nous de nourrir notre curiosité
 L'équipe ARIA est composée de : 
 
 - Elimane Yassine SEIDOU (Scientifique) : Titulaire d'un Master Recherche en Intelligence Artificielle et d'une Certification RNCP7 en Intelligence Artificielle & Management. Actuellement en Doctorat CIFRE entre Devoteam Research et l'Ecole Doctorale de l'Institut Polytechnique de Paris (Telecom SudParis - SAMOVAR) en IA appliquée au Continuum Computing. Quelques publications à son actif notamment en workshop à des A* tels que AAAI 2026 et WWW 2026 et en Regular Full Paper à des rangs B tels que IEEE SSE 2026 et IEEE CLOUD 2026
-- Charly Ken CAPO-CHICHI (Ingénieur) : Ingénieur en Big Data. Actuellement en double cursus à l'ENSAM et au CNAM (il a aimé les Arts et Métiers du coup il fait les deux ^^) master en Intelligence Artificielle. Publication à en workshop à AAAI 2026 à son actif.
+- Charly Ken CAPO-CHICHI (Ingénieur) : Ingénieur en Big Data. Actuellement en double cursus de Masters 2 en Intelligence Artificielle à l'ENSAM et au CNAM (il a aimé les Arts et Métiers du coup il fait les deux ^^). Publication à en workshop à AAAI 2026 à son actif.
 - Jarfino HOUNGBADJI (Ingénieur) : Ingénieur en Big Data. Actuellement étudiant en MSc d'Intelligence Artificielle à l'ECE
-- Randy TCHUISSEU (Ingénieur) : Ingénieur Big Data. Actuellement étudiant en Mastère d'Intelligence Artificielle et Big Data à l'ESGI.
+- Randy TCHUISSEU (Ingénieur) : Ingénieur en Big Data. Actuellement étudiant en Mastère d'Intelligence Artificielle et Big Data à l'ESGI.
 
 # 1- Quel est le plus grand projet que vous avez réalisé avec PyTorch ?
 
@@ -23,10 +23,26 @@ Pour construire mes vecteurs de pilotage, j'ai standardisé les tenseurs d'activ
 
 Il convient de préciser que cette implémentation du steering revêtait un but principalement exploratoire, s'inscrivant dans un contexte de recherche où cette méthode était historiquement testée sur des réseaux de neurones plus simples ou des concepts isolés, et non encore généralisée à des architectures génératives complexes comme les VSLM.
 
+# 2- Prévention de l’effondrement des représentations dans EB-JEPA
+
+Dans les architectures JEPA, l'effondrement des représentations se produit lorsque l'encodeur contourne la difficulté de l'apprentissage en produisant une constante triviale pour toutes les entrées. Pour empêcher cela, la bibliothèque EB-JEPA (A Lightweight Library for Energy-Based Joint-Embedding Predictive Architectures, Terver et al., 2026) adapte ses stratégies de régularisation en fonction de la complexité de la tâche : elle applique une contrainte d'invariance par projection spatiale (VICReg ou SIGReg) pour l'imagerie statique , un calcul d'erreur récursif (multi-step rollout) pour la vidéo , et une double contrainte de lissage géométrique ($\mathcal{L}_{sim}$) et de dynamique inverse ($\mathcal{L}_{IDM}$) pour l'interaction conditionnée par l'action.
+
+### Image-JEPA
+
+Évalué sur CIFAR-10 via un ResNet-18 , le modèle ne régularise pas directement l'encodeur, mais utilise un projecteur pour accroître la dimensionnalité latente (de 512 à 2048). Sur cet espace, deux régulariseurs s'offrent au choix. L'approche mécanique VICReg (Bardes et al., 2022) contraint la variance pour empêcher l'aplatissement et annule la covariance pour éviter la redondance d'information. Toutefois, le Théorème 3 de Balestriero et LeCun (2025) dans LeJEPA démontre que se limiter à l'alignement d'un nombre fini de moments statistiques s'avère mathématiquement insuffisant en haute dimension, laissant filtrer des effondrements dégénérés complexes. L'alternative statistique SIGReg pallie cette faille en forçant les représentations vers une distribution Gaussienne isotrope , rigoureusement prouvée par leur Théorème 1 comme la configuration optimale pour minimiser le risque de prédiction sur les tâches en aval.
+
+### Video-JEPA
+
+Évalué sur Moving MNIST via un encodeur ResNet-5 et un prédicteur spatial ResUNet, le modèle maintient les régulariseurs VICReg ou SIGReg dans l'espace projeté. Pour prémunir le prédicteur contre la dérive et l'effondrement sur long horizon, son optimisation repose sur un déroulement récursif multi-étapes (multi-step rollout), selon le protocole de Terver et al. (2026) . En minimisant l'erreur cumulée sur des représentations qu'il a lui-même générées ($\mathcal{L}_{video} = \sum \mathcal{L}_k$), cette méthode élimine le biais d'exposition induit par un entraînement classique en teacher-forcing mono-étape. Les dynamiques d'entraînement confirment qu'un optimum de Pareto est atteint à $K=4$ étapes de déroulement, maximisant la précision moyenne (mAP) des détections en aval par la capture rigoureuse des trajectoires physiques réelles des objets.
+
+### AC-Video-JEPA
+
+Évalué sur la tâche de navigation Two Rooms avec un encodeur IMPALA et un prédicteur GRU, ce modèle du monde anticipe l’effet d'actions spécifiques au sein d'un environnement stochastique. L'aléa y génère des corrélations trompeuses (spurious correlations) provoquant un effondrement immédiat sous la seule action des régulariseurs spatiaux (VICReg/SIGReg). Pour stabiliser l'espace et atteindre $97 \pm 2\%$ de succès en planification via l'algorithme MPPI, Terver et al. (2026) intègrent deux pertes temporelles. D'abord, la dynamique inverse ($\mathcal{L}_{IDM}$), des travaux de Pathak et al. (2017), force l'inférence de l'action entre deux états ; son abolition ($\omega=0$) entraîne un effondrement complet avec un score critique de $1 \pm 1\%$. Ensuite, la similarité temporelle ($\mathcal{L}_{sim}$) assure un lissage géométrique L2 ; sa suppression ($\delta=0$) fait chuter le succès à $61 \pm 2\%$, prouvant son rôle clé pour interdire les trajectoires latentes chaotiques et garantir des gradients stables au planificateur.
+
+En résumé L'effondrement est une faille mathématique permettant à l'IA de "tricher" sans rien apprendre. Pour bloquer ces raccourcis, EB-JEPA impose des garde-fous stricts et ciblés. Pour les images fixes, il force l'IA à diversifier et structurer géométriquement ses représentations (VICReg/SIGReg). Pour la vidéo, il exige une anticipation sur plusieurs étapes consécutives afin de valider la compréhension des lois de la physique. Enfin, dans les environnements interactifs, il la contraint à déduire l'action exacte ayant causé un changement, tout en lui imposant des transitions fluides. Ces règles interdisent toute solution de facilité et garantissent que le modèle développe une véritable compréhension de son environnement.
 
 # 4- Lancer un entraînement AC Video JEPA
 
 Vous souhaitez entraîner l’exemple AC Video JEPA sur l’environnement Two Rooms. Quelle proposition est correcte ?
-La proposition B. " L’entraînement se lance avec python -m examples.ac_video_jepa.main --fname examples/
-ac_video_jepa/cfgs/train.yaml, et les trajectoires Two Rooms sont générées à la volée pendant
-l’entraînement"
+
+La proposition B. " L’entraînement se lance avec python -m examples.ac_video_jepa.main --fname examples/ac_video_jepa/cfgs/train.yaml, et les trajectoires Two Rooms sont générées à la volée pendant l’entraînement"
