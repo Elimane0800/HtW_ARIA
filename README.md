@@ -1,6 +1,6 @@
 # HtW_ARIA
 
-Participer à ce Hackathon sera l'occasion pour nous de nourrir notre curiosité sur les JEPA mais aussi de construire une solution réelle sur cette nouvelle technologie. Voir à la fois comment des méthodes spectrales (interprétabilité mécanistique), basées sur la théorie des graphes ou autres, nous permettent de dégager des insights intéressantes en vue d'obtenir des modèles plus performants compte tenu des exigences business de notre solution finale. 
+Participer à ce Hackathon sera l'occasion pour nous de nourrir notre curiosité sur les JEPA mais aussi de construire une solution réelle sur cette nouvelle technologie. Voir à la fois comment des méthodes spectrales (interprétabilité mécanistique), basées sur la théorie des graphes ou autres, nous permettent de dégager des insights intéressants en vue d'obtenir des modèles plus performants compte tenu des exigences business de notre solution finale. 
 
 L'équipe ARIA est composée de : 
 
